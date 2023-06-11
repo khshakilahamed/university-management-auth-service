@@ -164,6 +164,41 @@
             "date": 1686344490490,
             "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-10-03-success.log",
             "hash": "eb96f484a44e667b8394a5881cda9e36b9a0e11a47f943a114afe48d5b95b6ff"
+        },
+        {
+            "date": 1686475229450,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-11-15-success.log",
+            "hash": "38290cbe2e86d3cd8ca30711046f95a958ee57ab3c02869e64cfe7a29f8ff01c"
+        },
+        {
+            "date": 1686477615667,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-11-16-success.log",
+            "hash": "a92ed98687b9030694d50eed16b4fbf3fa47c66df7541910e1f5d5cd1520200d"
+        },
+        {
+            "date": 1686498509087,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-11-21-success.log",
+            "hash": "ae0d81b2a74df6de03e6b7fc57ffbad24c686347021500348949ff6786646c7e"
+        },
+        {
+            "date": 1686499375231,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-11-22-success.log",
+            "hash": "150b0842f572c4fe1c76489d46601b93c824521ac354a48a10d70a3701cf6836"
+        },
+        {
+            "date": 1686504966138,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-11-23-success.log",
+            "hash": "f1702a1938091ef79e0ba14eb3e55a055e419405bf21c556eb4885d02c5f1493"
+        },
+        {
+            "date": 1686509200392,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-12-00-success.log",
+            "hash": "664e1a4ccf902e645af1e0060c76d321fab0043f81d184829f35af9ff80af449"
+        },
+        {
+            "date": 1686510117182,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\successes\\phu-2023-06-12-01-success.log",
+            "hash": "ac982ce3da3a9539b9c988c43c4ef4417076f6ce63e30ea00f96d4d659b6912a"
         }
     ],
     "hashType": "sha256"
