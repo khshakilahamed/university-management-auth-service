@@ -33,4 +33,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+// const academicSemester = {
+//   year: '2023',
+//   code: '01',
+// };
+// const textId = generateFacultyId();
+
 export default app;
