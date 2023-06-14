@@ -1,4 +1,4 @@
-export const studentSearchableFields = [
+export const facultySearchableFields = [
   'id',
   'email',
   'contactNo',
@@ -6,7 +6,7 @@ export const studentSearchableFields = [
   'name.middleName',
   'name.lastName',
 ];
-export const studentFilterableFields = [
+export const facultyFilterableFields = [
   'searchTerm',
   'id',
   'gender',

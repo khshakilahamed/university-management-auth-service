@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { bloodGroup, gender } from '../../../constants/common';
 
-const updateStudentZodSchema = z.object({
+const updateFacultyZodSchema = z.object({
   body: z.object({
     name: z
       .object({
@@ -18,30 +18,12 @@ const updateStudentZodSchema = z.object({
     emergencyContactNo: z.string().optional(),
     presentAddress: z.string().optional(),
     permanentAddress: z.string().optional(),
-    academicSemester: z.string().optional(),
     academicDepartment: z.string().optional(),
     academicFaculty: z.string().optional(),
-    guardian: z
-      .object({
-        fatherName: z.string().optional(),
-        fatherOccupation: z.string().optional(),
-        fatherContactNo: z.string().optional(),
-        motherName: z.string().optional(),
-        motherOccupation: z.string().optional(),
-        motherContactNo: z.string().optional(),
-        address: z.string().optional(),
-      })
-      .optional(),
-    localGuardian: z
-      .object({
-        name: z.string().optional(),
-        occupation: z.string().optional(),
-        contactNo: z.string().optional(),
-        address: z.string().optional(),
-      })
-      .optional(),
     profileImage: z.string().optional(),
   }),
 });
 
-export const StudentValidation = { updateStudentZodSchema };
+export const FacultyValidation = {
+  updateFacultyZodSchema,
+};
