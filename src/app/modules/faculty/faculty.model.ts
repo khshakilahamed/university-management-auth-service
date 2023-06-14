@@ -1,8 +1,8 @@
 import mongoose, { Schema } from 'mongoose';
-import { IStudent, StudentModel } from './student.interface';
+import { FacultyModel, IFaculty } from './faculty.interface';
 import { bloodGroup, gender } from '../../../constants/common';
 
-export const studentSchema = new Schema<IStudent>(
+export const FacultySchema = new Schema<IFaculty>(
   {
     id: {
       type: String,
@@ -58,60 +58,6 @@ export const studentSchema = new Schema<IStudent>(
       type: String,
       required: true,
     },
-    guardian: {
-      required: true,
-      type: {
-        fatherName: {
-          type: String,
-          required: true,
-        },
-        fatherOccupation: {
-          type: String,
-          required: true,
-        },
-        fatherContactNo: {
-          type: String,
-          required: true,
-        },
-        motherName: {
-          type: String,
-          required: true,
-        },
-        motherOccupation: {
-          type: String,
-          required: true,
-        },
-        motherContactNo: {
-          type: String,
-          required: true,
-        },
-        address: {
-          type: String,
-          required: true,
-        },
-      },
-    },
-    localGuardian: {
-      required: true,
-      type: {
-        name: {
-          type: String,
-          required: true,
-        },
-        occupation: {
-          type: String,
-          required: true,
-        },
-        contactNo: {
-          type: String,
-          required: true,
-        },
-        address: {
-          type: String,
-          required: true,
-        },
-      },
-    },
     academicFaculty: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicFaculty',
@@ -120,11 +66,6 @@ export const studentSchema = new Schema<IStudent>(
     academicDepartment: {
       type: Schema.Types.ObjectId,
       ref: 'AcademicDepartment',
-      required: true,
-    },
-    academicSemester: {
-      type: Schema.Types.ObjectId,
-      ref: 'AcademicSemester',
       required: true,
     },
     profileImage: {
@@ -140,7 +81,7 @@ export const studentSchema = new Schema<IStudent>(
   }
 );
 
-export const Student = mongoose.model<IStudent, StudentModel>(
-  'Student',
-  studentSchema
+export const Faculty = mongoose.model<IFaculty, FacultyModel>(
+  'Faculty',
+  FacultySchema
 );
