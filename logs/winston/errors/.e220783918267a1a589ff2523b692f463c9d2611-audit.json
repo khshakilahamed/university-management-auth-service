@@ -294,6 +294,21 @@
             "date": 1686823220706,
             "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\errors\\phu-2023-06-15-16-error.log",
             "hash": "12afc3f43181508008a4419e6da4f74ba84cdd2a5ff0fa40f331955ad1a9a962"
+        },
+        {
+            "date": 1686826941682,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\errors\\phu-2023-06-15-17-error.log",
+            "hash": "1d3376a58727543a2d2f391c5b9cd721e2db5d412ef6a98105c9c9655ca250d4"
+        },
+        {
+            "date": 1686830451663,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\errors\\phu-2023-06-15-18-error.log",
+            "hash": "08c83a69c82d8cdb36f045c0fa02b62897d0d4128946bd6e44dc6f5749489eaf"
+        },
+        {
+            "date": 1686834172092,
+            "name": "D:\\Level-2\\3 NoSQL Backend\\module 11 setup project professionally\\university-management-auth-service\\logs\\winston\\errors\\phu-2023-06-15-19-error.log",
+            "hash": "f01ff92a9f27e0923f479569eed20adf821ba2547ce94d06bd16611f93d579f9"
         }
     ],
     "hashType": "sha256"

@@ -9,8 +9,7 @@ import pick from '../../../shared/pick';
 import { academicFacultyFilterableFields } from './academicFaculty.constant';
 
 const createFaculty = catchAsync(async (req: Request, res: Response) => {
-  const { faculty } = req.body;
-  const result = await AcademicFacultyService.createFaculty(faculty);
+  const result = await AcademicFacultyService.createFaculty(req.body);
 
   sendResponse<IAcademicFaculty>(res, {
     statusCode: httpStatus.OK,
