@@ -21,10 +21,17 @@ const createStudent = async (
   student: IStudent,
   user: IUser
 ): Promise<IUser | null> => {
+  // user.needsPasswordChange = true;
   // default password
   if (!user.password) {
     user.password = config.default_student_pass as string;
   }
+
+  // // Hash Password
+  // user.password = await bcrypt.hash(
+  //   user.password,
+  //   Number(config.bcrypt_salt_rounds)
+  // );
 
   // set role
   user.role = 'student';
@@ -96,6 +103,12 @@ const createFaculty = async (
   faculty: IFaculty,
   user: IUser
 ): Promise<IUser | null> => {
+  // default password
+  if (!user.password) {
+    user.password = config.default_faculty_pass as string;
+    // user.password = id;
+  }
+
   // set role
   user.role = 'faculty';
 
@@ -111,11 +124,11 @@ const createFaculty = async (
     user.id = id;
     faculty.id = id;
 
-    // default password
-    if (!user.password) {
-      // user.password = config.default_student_pass as string;
-      user.password = id;
-    }
+    // // default password
+    // if (!user.password) {
+    //   // user.password = config.default_student_pass as string;
+    //   user.password = id;
+    // }
 
     // array
     const newFaculty = await Faculty.create([faculty], { session });
@@ -164,6 +177,11 @@ const createAdmin = async (
   admin: IAdmin,
   user: IUser
 ): Promise<IUser | null> => {
+  // default password
+  if (!user.password) {
+    user.password = config.default_admin_pass as string;
+  }
+
   // set role
   user.role = 'admin';
 
@@ -180,11 +198,11 @@ const createAdmin = async (
     user.id = id;
     admin.id = id;
 
-    // default password
-    if (!user.password) {
-      // user.password = config.default_student_pass as string;
-      user.password = id;
-    }
+    // // default password
+    // if (!user.password) {
+    //   // user.password = config.default_student_pass as string;
+    //   user.password = id;
+    // }
 
     // array
     const newAdmin = await Admin.create([admin], { session });
