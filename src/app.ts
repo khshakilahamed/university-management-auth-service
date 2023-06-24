@@ -4,8 +4,10 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import routes from './app/routes';
 import httpStatus from 'http-status';
 const app: Application = express();
+import cookieParser from 'cookie-parser';
 
 app.use(cors());
+app.use(cookieParser());
 
 // parser
 app.use(express.json());

@@ -1,7 +1,8 @@
 export const facultySearchableFields = [
-  'id',
   'email',
+  'id',
   'contactNo',
+  'emergencyContactNo',
   'name.firstName',
   'name.middleName',
   'name.lastName',
