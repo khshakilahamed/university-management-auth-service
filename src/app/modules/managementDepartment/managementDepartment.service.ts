@@ -1,4 +1,3 @@
-import httpStatus from 'http-status';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -9,7 +8,6 @@ import {
 } from './managementDepartment.interface';
 import { ManagementDepartment } from './managementDepartment.model';
 import { SortOrder } from 'mongoose';
-import ApiError from '../../../errors/ApiError';
 
 const createManagementDepartment = async (
   payload: IManagementDepartment
@@ -90,18 +88,21 @@ const updateManagementDepartment = async (
   id: string,
   payload: Partial<IManagementDepartment>
 ): Promise<IManagementDepartment | null> => {
-  const isExist = await ManagementDepartment.findOne({ id });
-  if (!isExist) {
-    throw new ApiError(
-      httpStatus.NOT_FOUND,
-      'Management department not found !'
-    );
-  }
+  const result = await ManagementDepartment.findOneAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+    }
+  );
 
-  const result = await ManagementDepartment.findByIdAndUpdate(id, payload, {
-    new: true,
-  });
+  return result;
+};
 
+const deleteManagementDepartment = async (
+  id: string
+): Promise<IManagementDepartment | null> => {
+  const result = await ManagementDepartment.findByIdAndDelete(id);
   return result;
 };
 
@@ -110,4 +111,5 @@ export const ManagementDepartmentService = {
   getAllManagementDepartments,
   getSingleManagementDepartment,
   updateManagementDepartment,
+  deleteManagementDepartment,
 };

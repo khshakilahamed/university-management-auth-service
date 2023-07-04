@@ -80,9 +80,26 @@ const updateManagementDepartment = catchAsync(
   }
 );
 
+const deleteManagementDepartment = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await ManagementDepartmentService.deleteManagementDepartment(
+      id
+    );
+
+    sendResponse<IManagementDepartment>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Management department deleted successfully',
+      data: result,
+    });
+  }
+);
+
 export const ManagementDepartmentController = {
   createManagementDepartment,
   getAllManagementDepartments,
   getSingleManagementDepartment,
   updateManagementDepartment,
+  deleteManagementDepartment,
 };

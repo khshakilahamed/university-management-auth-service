@@ -1,0 +1,1 @@
+Tue Jul 04 2023 13:47:23 [PH] error: Invalid salt. Salt must be in the form of: $Vers$log2(NumRounds)$saltvalue
