@@ -1,0 +1,2 @@
+Mon Sep 18 2023 21:1:36 [PH] error: Cast to ObjectId failed for value "343bec8f-d052-49b8-89cf-57ddd6c6fae6" (type string) at path "academicFaculty" because of "BSONError"
+Mon Sep 18 2023 21:6:22 [PH] error: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer

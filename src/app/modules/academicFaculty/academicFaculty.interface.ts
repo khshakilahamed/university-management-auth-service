@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 
 export type IAcademicFaculty = {
   title: string;
+  syncId: string;
 };
 
 export type AcademicFacultyModel = Model<
@@ -10,3 +11,8 @@ export type AcademicFacultyModel = Model<
 >;
 
 export type IAcademicFacultyFilters = { searchTerm?: string };
+
+export type IAcademicFacultyCreatedEvent = {
+  title: string;
+  id: string;
+};

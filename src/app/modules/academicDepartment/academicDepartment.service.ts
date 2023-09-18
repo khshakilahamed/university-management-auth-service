@@ -1,13 +1,17 @@
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
+import { AcademicFaculty } from '../academicFaculty/academicFaculty.model';
 import { academicSemesterSearchableFields } from './academicDepartment.constant';
 import {
   IAcademicDepartment,
+  IAcademicDepartmentCreatedEvent,
   IAcademicDepartmentFilters,
 } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
-import { SortOrder } from 'mongoose';
+import { SortOrder, Types } from 'mongoose';
 
 const createDepartment = async (
   payload: IAcademicDepartment
@@ -103,10 +107,58 @@ const deleteDepartment = async (
   return result;
 };
 
+const createDepartmentFromEvent = async (
+  e: IAcademicDepartmentCreatedEvent
+): Promise<void> => {
+  const faculty = await AcademicFaculty.findOne({
+    syncId: e.academicFacultyId,
+  });
+
+  if (!faculty) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Academic Faculty does not exist');
+  }
+
+  await AcademicDepartment.create({
+    title: e.title,
+    academicFaculty: faculty._id,
+    syncId: e.id,
+  });
+};
+
+const updateOneIntoDBFromEvent = async (
+  e: IAcademicDepartmentCreatedEvent
+): Promise<void> => {
+  if (e.academicFacultyId) {
+    const faculty = await AcademicFaculty.findOne({
+      syncId: e.academicFacultyId,
+    });
+
+    e.academicFacultyId = faculty?._id;
+  }
+  await AcademicDepartment.findOneAndUpdate(
+    { syncId: e.id },
+    {
+      $set: {
+        title: e.title,
+        academicFaculty: new Types.ObjectId(e.academicFacultyId),
+      },
+    }
+  );
+};
+
+const deleteDepartmentFromEvent = async (
+  e: IAcademicDepartmentCreatedEvent
+): Promise<void> => {
+  await AcademicDepartment.findOneAndDelete({ syncId: e.id });
+};
+
 export const AcademicDepartmentService = {
   createDepartment,
   getAllDepartments,
   getSingleDepartment,
   updateDepartment,
   deleteDepartment,
+  createDepartmentFromEvent,
+  updateOneIntoDBFromEvent,
+  deleteDepartmentFromEvent,
 };

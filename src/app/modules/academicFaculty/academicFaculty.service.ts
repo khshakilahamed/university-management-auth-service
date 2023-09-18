@@ -5,6 +5,7 @@ import { SortOrder } from 'mongoose';
 import { AcademicFaculty } from './academicFaculty.model';
 import {
   IAcademicFaculty,
+  IAcademicFacultyCreatedEvent,
   IAcademicFacultyFilters,
 } from './academicFaculty.interface';
 import { academicFacultySearchableFields } from './academicFaculty.constant';
@@ -96,10 +97,41 @@ const deleteFaculty = async (id: string): Promise<IAcademicFaculty | null> => {
   return result;
 };
 
+const createFacultyFromEvent = async (
+  e: IAcademicFacultyCreatedEvent
+): Promise<void> => {
+  await AcademicFaculty.create({
+    title: e.title,
+    syncId: e.id,
+  });
+};
+
+const updateOneIntoDBFromEvent = async (
+  e: IAcademicFacultyCreatedEvent
+): Promise<void> => {
+  await AcademicFaculty.findOneAndUpdate(
+    { syncId: e.id },
+    {
+      $set: {
+        title: e.title,
+      },
+    }
+  );
+};
+
+const deleteSemesterFromEvent = async (
+  e: IAcademicFacultyCreatedEvent
+): Promise<void> => {
+  await AcademicFaculty.findOneAndDelete({ syncId: e.id });
+};
+
 export const AcademicFacultyService = {
   createFaculty,
   getAllFaculties,
   getSingleFaculty,
   updateFaculty,
   deleteFaculty,
+  createFacultyFromEvent,
+  updateOneIntoDBFromEvent,
+  deleteSemesterFromEvent,
 };

@@ -18,16 +18,12 @@ const initAcademicSemesterEvents = () => {
     const data = JSON.parse(e);
 
     await AcademicSemesterService.updateOneIntoDBFromEvent(data);
-
-    console.log(data);
   });
 
   RedisClient.subscribe(EVENT_ACADEMIC_SEMESTER_DELETED, async (e: string) => {
     const data = JSON.parse(e);
 
     await AcademicSemesterService.deleteSemesterFromEvent(data);
-
-    console.log(data);
   });
 };
 
