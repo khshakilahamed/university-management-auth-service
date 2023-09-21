@@ -72,6 +72,10 @@ export const FacultySchema = new Schema<IFaculty>(
       type: String,
       //   required: true,
     },
+    designation: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

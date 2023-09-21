@@ -3,6 +3,7 @@ export const academicSemesterFilterableFields = [
   'searchTerm',
   'title',
   'academicFaculty',
+  'syncId',
 ];
 
 export const EVENT_ACADEMIC_DEPARTMENT_CREATED = 'academicDepartment.created';

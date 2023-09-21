@@ -1,5 +1,3 @@
-import httpStatus from 'http-status';
-import ApiError from '../../../errors/ApiError';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -11,7 +9,7 @@ import {
   IAcademicDepartmentFilters,
 } from './academicDepartment.interface';
 import { AcademicDepartment } from './academicDepartment.model';
-import { SortOrder, Types } from 'mongoose';
+import { SortOrder } from 'mongoose';
 
 const createDepartment = async (
   payload: IAcademicDepartment
@@ -110,38 +108,33 @@ const deleteDepartment = async (
 const createDepartmentFromEvent = async (
   e: IAcademicDepartmentCreatedEvent
 ): Promise<void> => {
-  const faculty = await AcademicFaculty.findOne({
+  const academicFaculty = await AcademicFaculty.findOne({
     syncId: e.academicFacultyId,
   });
-
-  if (!faculty) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Academic Faculty does not exist');
-  }
-
-  await AcademicDepartment.create({
+  const payload = {
     title: e.title,
-    academicFaculty: faculty._id,
+    academicFaculty: academicFaculty?._id,
     syncId: e.id,
-  });
+  };
+
+  await AcademicDepartment.create(payload);
 };
 
 const updateOneIntoDBFromEvent = async (
   e: IAcademicDepartmentCreatedEvent
 ): Promise<void> => {
-  if (e.academicFacultyId) {
-    const faculty = await AcademicFaculty.findOne({
-      syncId: e.academicFacultyId,
-    });
+  const academicFaculty = await AcademicFaculty.findOne({
+    syncId: e.academicFacultyId,
+  });
+  const payload = {
+    title: e.title,
+    academicFaculty: academicFaculty?._id,
+  };
 
-    e.academicFacultyId = faculty?._id;
-  }
   await AcademicDepartment.findOneAndUpdate(
     { syncId: e.id },
     {
-      $set: {
-        title: e.title,
-        academicFaculty: new Types.ObjectId(e.academicFacultyId),
-      },
+      $set: payload,
     }
   );
 };

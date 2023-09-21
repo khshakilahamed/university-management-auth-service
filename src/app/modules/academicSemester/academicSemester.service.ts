@@ -174,7 +174,6 @@ const updateOneIntoDBFromEvent = async (
 const deleteSemesterFromEvent = async (
   e: IAcademicSemesterCreatedEvent
 ): Promise<void> => {
-  console.log(e);
   await AcademicSemester.findOneAndDelete({ syncId: e.id });
 };
 

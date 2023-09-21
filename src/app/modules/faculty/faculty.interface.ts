@@ -23,6 +23,7 @@ export type IFaculty = {
   academicFaculty: Types.ObjectId | IAcademicFaculty;
   academicDepartment: Types.ObjectId | IAcademicDepartment;
   profileImage?: string;
+  designation?: string;
 };
 
 export type FacultyModel = Model<IFaculty, Record<string, unknown>>;

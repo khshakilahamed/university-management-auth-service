@@ -6,6 +6,7 @@ import httpStatus from 'http-status';
 
 const createStudent = catchAsync(async (req: Request, res: Response) => {
   const { student, ...userData } = req.body;
+  student.profileImage = userData.profileImage;
   const result = await UserService.createStudent(student, userData);
 
   sendResponse(res, {
@@ -29,6 +30,7 @@ const createFaculty = catchAsync(async (req: Request, res: Response) => {
 });
 
 const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.body);
   const { admin, ...userData } = req.body;
   const result = await UserService.createAdmin(admin, userData);
 

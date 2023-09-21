@@ -143,6 +143,9 @@ const createFacultyZodSchema = z.object({
         required_error: 'Academic faculty is required',
       }),
       profileImage: z.string().optional(),
+      designation: z.string({
+        required_error: 'Designation is required',
+      }),
     }),
   }),
 });
