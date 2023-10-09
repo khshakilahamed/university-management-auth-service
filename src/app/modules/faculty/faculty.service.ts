@@ -1,27 +1,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
+/* eslint-dgetAllFacultiesisable @typescript-eslint/no-explicit-any */
 import mongoose, { SortOrder } from 'mongoose';
-import ApiError from '../../../errors/ApiError';
+import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IGenericResponse } from '../../../interfaces/common';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+
 import httpStatus from 'http-status';
-import { IFaculty, IFacultyFilters } from './faculty.interface';
+import ApiError from '../../../errors/ApiError';
+import { RedisClient } from '../../../shared/redis';
+import { User } from '../user/user.model';
 import {
   EVENT_FACULTY_UPDATED,
   facultySearchableFields,
 } from './faculty.constant';
+import { IFaculty, IFacultyFilters } from './faculty.interface';
 import { Faculty } from './faculty.model';
-import { User } from '../user/user.model';
-import { RedisClient } from '../../../shared/redis';
+
+const getSingleFaculty = async (id: string): Promise<IFaculty | null> => {
+  const result = await Faculty.findOne({ id })
+    .populate('academicDepartment')
+    .populate('academicFaculty');
+
+  return result;
+};
 
 const getAllFaculties = async (
   filters: IFacultyFilters,
   paginationOptions: IPaginationOptions
 ): Promise<IGenericResponse<IFaculty[]>> => {
+  // Extract searchTerm to implement search query
   const { searchTerm, ...filtersData } = filters;
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(paginationOptions);
 
   const andConditions = [];
 
+  // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
       $or: facultySearchableFields.map((field) => ({
@@ -32,7 +46,7 @@ const getAllFaculties = async (
       })),
     });
   }
-
+  // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => ({
@@ -41,26 +55,22 @@ const getAllFaculties = async (
     });
   }
 
-  const { page, limit, skip, sortBy, sortOrder } =
-    paginationHelpers.calculatePagination(paginationOptions);
-
+  // Dynamic  Sort needs  field to  do sorting
   const sortConditions: { [key: string]: SortOrder } = {};
-
   if (sortBy && sortOrder) {
     sortConditions[sortBy] = sortOrder;
   }
-
-  const whereCondition =
+  const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Faculty.find(whereCondition)
+  const result = await Faculty.find(whereConditions)
     .populate('academicDepartment')
     .populate('academicFaculty')
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  const total = await Faculty.countDocuments(whereCondition);
+  const total = await Faculty.countDocuments(whereConditions);
 
   return {
     meta: {
@@ -70,14 +80,6 @@ const getAllFaculties = async (
     },
     data: result,
   };
-};
-
-const getSingleFaculty = async (id: string): Promise<IFaculty | null> => {
-  const result = await Faculty.findOne({ id })
-    .populate('academicDepartment')
-    .populate('academicFaculty');
-
-  return result;
 };
 
 const updateFaculty = async (
@@ -90,32 +92,24 @@ const updateFaculty = async (
     throw new ApiError(httpStatus.NOT_FOUND, 'Faculty not found !');
   }
 
-  const { name, ...facultyData } = payload;
+  const { name, ...FacultyData } = payload;
+  const updatedFacultyData: Partial<IFaculty> = { ...FacultyData };
 
-  const updatedFacultyData: Partial<IFaculty> = { ...facultyData };
-
-  // dynamically handling
   if (name && Object.keys(name).length > 0) {
     Object.keys(name).forEach((key) => {
-      const nameKey = `name.${key}`; // `name.firstName`
+      const nameKey = `name.${key}` as keyof Partial<IFaculty>;
       (updatedFacultyData as any)[nameKey] = name[key as keyof typeof name];
     });
   }
 
-  const result = await Faculty.findOneAndUpdate(
-    { id: id },
-    updatedFacultyData,
-    {
-      new: true,
-    }
-  )
+  const result = await Faculty.findOneAndUpdate({ id }, updatedFacultyData, {
+    new: true,
+  })
     .populate('academicFaculty')
     .populate('academicDepartment');
-
   if (result) {
     await RedisClient.publish(EVENT_FACULTY_UPDATED, JSON.stringify(result));
   }
-
   return result;
 };
 
@@ -149,8 +143,8 @@ const deleteFaculty = async (id: string): Promise<IFaculty | null> => {
 };
 
 export const FacultyService = {
-  getAllFaculties,
   getSingleFaculty,
+  getAllFaculties,
   updateFaculty,
   deleteFaculty,
 };

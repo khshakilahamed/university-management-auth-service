@@ -13,6 +13,7 @@ import { academicFacultySearchableFields } from './academicFaculty.constant';
 const createFaculty = async (
   payload: IAcademicFaculty
 ): Promise<IAcademicFaculty> => {
+  console.log(payload);
   const result = await AcademicFaculty.create(payload);
   return result;
 };

@@ -21,11 +21,10 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   }
 
   // Match Password
-  const isPasswordMatched =
+  if (
     isUserExist.password &&
-    (await User.isPasswordMatched(password, isUserExist?.password));
-
-  if (!isPasswordMatched) {
+    !(await User.isPasswordMatched(password, isUserExist.password))
+  ) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect');
   }
 

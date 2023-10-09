@@ -1,1 +1,0 @@
-Sat Sep 16 2023 23:32:11 [PH] error: Cast to ObjectId failed for value "{ syncId: '8d6153ed-867e-4b11-98d5-68bbbd7c6cf5' }" (type Object) at path "_id" for model "AcademicSemester"
