@@ -202,7 +202,7 @@ const createAdmin = async (
   // set role
   user.role = 'admin';
 
-  console.log(user);
+  // console.log(user);
 
   let newUserAllData = null;
 

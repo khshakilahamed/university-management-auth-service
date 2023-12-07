@@ -20,4 +20,7 @@ export default {
     url: process.env.REDIS_URL,
     expires_in: process.env.REDIS_TOKEN_EXPIRES_IN,
   },
+  reset_link: process.env.RESET_PASS_UI_LINK,
+  email: process.env.EMAIL,
+  app_pass: process.env.APP_PASS,
 };
